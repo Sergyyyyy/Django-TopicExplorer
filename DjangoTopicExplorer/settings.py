@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Django-TopicExplorer.DjangoTopicExplorer.urls'
+ROOT_URLCONF = 'DjangoTopicExplorer.urls'
 
 TEMPLATES = [
     {

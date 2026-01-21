@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class TopicexplorerConfig(AppConfig):
-    name = 'Django-TopicExplorer.TopicExplorer'
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'TopicExplorer'
+
