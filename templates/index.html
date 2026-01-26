@@ -1,12 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Topic Explorer</title>
+    <title>Django Topic Explorer</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .search-box {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 6px;
+            width: 220px;
+        }
+        button {
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .result-box {
+            border: 2px solid #000;
+            padding: 15px;
+            margin-top: 20px;
+            width: 600px;
+        }
+        .error-msg{
+            color: #c42525;
+            font-weight: bold;
+        }
+        .divider {
+            margin: 30px 0;
+            border-top: 1px solid #000;
+        }
+        .topics-list {
+            margin-top: 10px;
+        }
+    </style>
+
 </head>
-<body>
+
+    <body>
+
     <h1>Django Topic Explorer</h1>
 
+    <div class="search-box">
+        <form method="GET">
+            <input type="text" name="q" placeholder="Enter topic (e.g. Views)..." value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
-</body>
+    {% if found %}
+        <div class="result-box">
+            <h2>Result for: {{ result.name }}</h2>
+            <p>{{ result.description }}</p>
+        </div>
+    {% elif query %}
+        <div class="result-box">
+            <p class="error-msg">Topic "{{ query }}" not found.</p>
+            <p>Please check your spelling or try searching for 'Admin' or 'Models'.</p>
+        </div>
+    {% endif %}
+
+    <div class="divider"></div>
+
+    <h3>Available Topics to Explore.</h3>
+
+    <ul class="topics-list">
+        {% for topic in topics %}
+            <li>{{ topic.name }}</li>
+        {% endfor %}
+    </ul>
+
+    </body>
 </html>

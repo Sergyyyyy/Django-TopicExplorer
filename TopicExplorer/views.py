@@ -5,46 +5,43 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-# def testing(request):
-#     return HttpResponse("<h1>Hello World!</h1>")
 
-class Model:
-    def __init__(self, TopicName, Description):
-        self.TopicName = TopicName
-        self.Description = Description
+class Topic:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
 
-topics = {"Models" : "Handles your database structure and data.",
-        "Views" : "The logic that processes requests and returns responses.",
-        "Templates" : "The HTML files that display data to the user.",
-        "URLs" : "The address book that routes requests to views.",
-        "Admin" : "A built-in interface to manage your data easily.",
-        "MVT" : "Stands for Model-View-Template architecture.",
-        "ORM" : "Allows you to talk to a database using Python code.",
-        "Migrations" : "Propagates changes you make to models to the database.",
-        "Forms" : "Handles user input and validation safely.",
-        "Middleware" : "Hooks into Django's request/response processing."}
+TOPICS = [
+    Topic("Models", "Handles your database structure and data."),
+    Topic("Views", "The logic that processes requests and returns responses"),
+    Topic("Templates", "The HTML files that display data to the user."),
+    Topic("URLs", "The address book that routes requests to views"),
+    Topic("Admin", "A built-in interface to manage your data easily."),
+    Topic("MVT", "Stands for Model-View-Template architecture."),
+    Topic("ORM", "Allows you to talk to a database using Python code."),
+    Topic("Migrations", "Propagates changes you make to models to the database."),
+    Topic("Forms", "Handles user input and validation safely"),
+    Topic("Middleware", "Hooks into Django's request/response processing"),
+]
 
+def index(request):
+    query = request.GET.get('q')  # get search keyword from URL
+    result = None
+    found = False
 
+    if query:
+        for topic in TOPICS:
+            if topic.name.lower() == query.lower():
+                result = topic
+                found = True
+                break
 
-def Home1(request):
-    pass
-
-
-
-
-"""
-Models - Handles your database structure and data.
-Views - The logic that processes requests and returns responses.
-Templates - The HTML files that display data to the user.
-URLs - The address book that routes requests to views.
-Admin - A built-in interface to manage your data easily.
-MVT - Stands for Model-View-Template architecture.
-ORM - Allows you to talk to a database using Python code.
-Migrations - Propagates changes you make to models to the database.
-Forms - Handles user input and validation safely.
-Middleware - Hooks into Django's request/response processing.
-"""
-
+    return render(request, 'index.html', {
+        'result': result,
+        'found': found,
+        'query': query,
+        'topics': TOPICS
+    })
 
 """
     def home(request):
